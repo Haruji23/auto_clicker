@@ -1,6 +1,6 @@
 # 📌 Auto Clicker
 
-A lightweight, multi-threaded Python auto-clicker with customizable hotkeys. Optimized for Sky: Children of the Light and beyond.
+A lightweight, multi-threaded Python auto-clicker with customizable hotkeys. Optimized for Sky: Children of the Light, but adaptable for other contexts.
 
 ## 🚀 Features
 * ⌨️ Hotkey support: Start/stop with your own shortcut
