@@ -1,0 +1,59 @@
+from state import State
+from logging import info
+from typing import Callable
+from pynput.keyboard import Key, KeyCode
+
+def create_on_press(state: State) -> Callable[[Key, KeyCode], None]:
+    """
+    Returns a keyboard event handler that controls the auto-clicker's runtime behavior.
+
+    This function generates a callback function (`on_press`) that listens for specific key inputs.
+    When the toggle key is pressed, it flips the operating state of the auto-clicker. When the
+    stop key is pressed, it marks the application for termination.
+
+    Parameters
+    ----------
+    state : State
+        An instance of the State class containing runtime flags and user-defined hotkeys.
+
+    Returns
+    -------
+    Callable[[Key | KeyCode], None]
+        A keyboard event handler function to be used with pynput's listener.
+    """
+
+    def on_press(key: Key | KeyCode) -> None:
+        """
+        Callback function triggered whenever a key is pressed.
+
+        This function checks if the pressed key matches the toggle or stop key defined in the shared
+        state object. If the toggle key is pressed, the auto-clicker switches between active and
+        inactive states. If the stop key is pressed, it signals the application to exit gracefully.
+
+        Side Effects
+        ------------
+        - Sets or unsets `state.operating`, changing whether the clicker is actively clicking.
+        - Sets `state.exiting = True` to trigger application shutdown on the next cycle.
+        - Emits logging messages indicating mode transitions.
+
+        Parameters
+        ----------
+        key : Key | KeyCode
+            The key object received from pynput's keyboard listener. Can be a special key (Key)
+            or a character key (KeyCode).
+
+        Returns
+        -------
+        None
+            This function performs state transitions and logging, but does not return a value.
+        """
+        if key == state.toggle_key:
+            state.operating = not state.operating
+            if state.operating:
+                info("Auto-clicker started.")
+            else:
+                info("Auto-clicker stopped.")
+        if key == state.exit_key:
+            state.exiting = True
+            info("Trying to exit the program.")
+    return on_press

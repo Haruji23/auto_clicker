@@ -1,1 +1,6 @@
 auto_clicker_env/
+__pycache__/
+src/auto_click_script.py
+configs/
+tests/
+bin/
