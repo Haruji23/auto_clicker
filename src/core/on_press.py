@@ -1,5 +1,5 @@
-from state import State
-from logging import info
+from core.state import State
+from logging import info, debug
 from typing import Callable
 from pynput.keyboard import Key, KeyCode
 
@@ -49,11 +49,13 @@ def create_on_press(state: State) -> Callable[[Key, KeyCode], None]:
         """
         if key == state.toggle_key:
             state.operating = not state.operating
+            debug(f"Operating's state : {state.operating}")
             if state.operating:
-                info("Auto-clicker started.")
+                info("[bold cyan]Auto-clicker[/] [bold green]started.[/]")
             else:
-                info("Auto-clicker stopped.")
+                info("[bold cyan]Auto-clicker[/] [bold red]stopped.[/]")
         if key == state.exit_key:
             state.exiting = True
-            info("Trying to exit the program.")
+            debug(f"Exiting's state: {state.exiting}")
+            info("Trying to [bold red]exit[/] the program.")
     return on_press

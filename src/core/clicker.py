@@ -2,7 +2,7 @@ from time import sleep
 from threading import Thread
 from pynput.keyboard import Listener
 from pynput.mouse import Controller
-from state import State
+from core.state import State
 from logging import info
 
 class AutoClicker(Thread):
@@ -65,4 +65,4 @@ class AutoClicker(Thread):
                 sleep(0.1)
         # if exiting is true
         self.keyboard_listener.stop() # Stop running the keyboard listener
-        info("Keyboard listener stopped.")
+        info("[bold green]Keyboard listener[/] [bold red]stopped.[/]")
