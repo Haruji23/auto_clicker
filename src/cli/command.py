@@ -70,7 +70,7 @@ def command():
         show_status(loaded_configs)
 
     # --- Handle `start` command ---
-    elif args.command == "start":
+    elif args.command == "start" or args.command is None:
         
         # Load saved configs and update app state
         loaded_configs = load_configs(CONFIGS_PATH)

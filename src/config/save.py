@@ -16,7 +16,7 @@ Raises:
 
 
 import json
-from logging import exception,error
+from logging import exception,error, warning, info
 from config.constants import CONFIGS_PATH
 from config.validate import check_configs
 
@@ -36,6 +36,12 @@ def save_configs(config: dict) -> None:
     
     # Ensure config contains all required keys
     config = check_configs(config=config)
+    
+    SETTINGS_DIR = CONFIGS_PATH.parent
+    if not SETTINGS_DIR.is_dir():
+        SETTINGS_DIR.mkdir(parents=True, exist_ok=True)
+        info(f"Created missing directory: {SETTINGS_DIR}")
+    
     try:
         
         # Attempt to write config to disk with nice indentation
