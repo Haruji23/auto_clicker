@@ -1,3 +1,11 @@
+"""
+Constants used across the config module.
+
+Attributes:
+    CONFIGS_PATH (Path): Path to the JSON config file.
+    DEFAULT_CONFIGS (dict): Default configuration values.
+"""
+
 from pathlib import Path
 
 # Dafault configurations
@@ -7,15 +15,6 @@ DEFAULT_CONFIGS = {
     "button": "right",
     "interval": 60.0
 }
-
-# Color constants
-WHITE  = "\033[37m"
-CYAN = "\033[36m"
-GREEN = "\033[32m"
-RESET = "\033[0m"
-RED = "\033[31m"
-DARK_RED = "\033[41m"
-YELLOW = "\033[33m"
 
 # File path of the current configurations
 CONFIGS_PATH = Path("../settings/current_configs.json")

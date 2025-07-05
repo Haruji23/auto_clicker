@@ -1,6 +1,6 @@
 {
-    "toggle_key": "f4",
-    "exit_key": "f6",
-    "button": "middle",
-    "interval": 30.0
+    "toggle_key": "f6",
+    "exit_key": "f8",
+    "button": "right",
+    "interval": 60.0
 }

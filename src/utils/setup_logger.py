@@ -1,3 +1,14 @@
+"""
+Logger setup utility with rich console output and file handlers.
+
+Functions:
+    setup_logger(debug_mode, log_dir): Initialize logger with color console and split log files.
+
+Args:
+    debug_mode (bool): Whether to enable DEBUG level in console.
+    log_dir (str): Directory to store log files.
+"""
+
 from rich.console import Console
 from rich.logging import RichHandler
 import logging
@@ -58,5 +69,5 @@ def setup_logger(debug_mode: bool = False, log_dir: str = "../logs") -> None:
     err_file.setFormatter(formatter)
     logger.addHandler(err_file)
 
-    # ✅ Summary log
+    # Summary log
     logger.info("[bold cyan]🚀 Logger initialized. Debug mode: %s[/]", debug_mode)

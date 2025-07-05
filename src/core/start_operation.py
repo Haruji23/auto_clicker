@@ -5,16 +5,24 @@ from pynput.mouse import Controller
 from core.clicker import AutoClicker
 from core.on_press import create_on_press
 
+"""
+Entry point to launch the auto-clicker loop.
+
+Loads configuration, displays current state, and starts the clicker thread.
+
+Args:
+    state (State) : Class containing user-defined configurations & runtime status
+"""
+
+
 def start_auto_clicker(state: State) -> None:
     """
     This function shared application state, mouse controller,
     hotkey listener, and auto-clicker thread. It starts the key listener and
     background clicker, then blocks until termination is triggered via the stop hotkey.
 
-    Returns
-    -------
-    None
-        This function does not return any value.
+    Returns:
+        None: This function does not return any value.
     """
     # Initialize a controller
     mouse_controller = Controller()

@@ -1,3 +1,15 @@
+"""
+Shared state object for managing the auto-clicker's runtime behavior.
+
+This module defines the `State` class, which acts as a central data pool
+during the program's execution. It holds user-defined configurations
+(e.g., hotkeys, click interval, mouse button) as well as volatile runtime flags,
+such as whether the clicker is currently active or should terminate.
+
+Classes:
+    State: Stores the current config and runtime state flags.
+"""
+
 from dataclasses import dataclass
 from pynput.keyboard import Key, KeyCode
 from pynput.mouse import Button
@@ -5,22 +17,15 @@ from utils.key_parser import key_mouse_to_str, parse_key, parse_button
 @dataclass
 class State:
     """
-    Represents the runtime state and configuration of the auto-clicker.
+    Represents the runtime state and user-defined configurations of the auto-clicker.
 
-    Attributes
-    ----------
-    operating : bool
-        Whether the auto-clicker is actively running (i.e., clicking).
-    exiting : bool
-        Whether the application is in the process of exiting.
-    toggle_key : Key | KeyCode
-        Keyboard shortcut to start or stop the auto-clicker.
-    exit_key : Key | KeyCode
-        Keyboard shortcut to trigger application shutdown.
-    click_button : Button
-        The mouse button used for clicking (e.g., Button.left or Button.right).
-    click_interval : float
-        Delay in seconds between mouse clicks.
+    Attributes:
+        operating (bool) : Whether the auto-clicker is currently running
+        exiting (bool): Whether the application is in the process of exiting.
+        toggle_key (Key | KeyCode): Keyboard shortcut to start or stop the auto-clicker.
+        exit_key (Key | KeyCode) : Keyboard shortcut to trigger application shutdown.
+        click_button (Button): The mouse button used for clicking (e.g., Button.left, Button.right, Button.middle).
+        click_interval (float): Delay in seconds between mouse clicks.
     """
 
     # Applicaion State
@@ -44,22 +49,17 @@ class State:
         """
         Returns the string representation of the toggle key.
 
-        Returns
-        -------
-        string
-            Readable hotkey name (e.g., "F6").
+        Returns:
+            str: Readable hotkey name (e.g., "F6").
         """
         return key_mouse_to_str(self.toggle_key)
 
     @property
     def exit_key_str(self) -> str:
-        """
-        Returns the string representation of the stop key.
+        """Return the string representation of the stop key.
 
-        Returns
-        -------
-        str
-            Readable hotkey name (e.g., "F8").
+        Returns:
+            str: Readable hotkey name (e.g., "F8").
         """
         return key_mouse_to_str(self.exit_key)
     @property
@@ -67,10 +67,8 @@ class State:
         """
         Return the string representation of the mouse button.
 
-        Returns
-        -------
-        str
-            Readable mouse button (e.g., right)
+        Returns:
+            str : Readable mouse button (e.g., right)
         """
         return key_mouse_to_str(self.click_button)
     
@@ -78,14 +76,11 @@ class State:
         """
         Sets the data from a dict. (toggle_key, exit_key, click_button, click_interval)
 
-        Parameter
-        data : dictionary
-            Data is loaded from a json file
+        Parameters:
+            data (dict): Data is loaded from a json file.
         
-        Returns
-        -------
-        None
-            This method does not return a value.
+        Returns:
+            None: This method does not return a value.
         """
         self.toggle_key = parse_key(data["toggle_key"])
         self.exit_key = parse_key(data["exit_key"])
@@ -96,11 +91,8 @@ class State:
         """
         Converts the configurations to a dictionary.(Ureadable form)
         
-        Returns
-        -------
-        dict
-            Dictionary of configurations, but unreadable form.
-        
+        Returns:
+            dict : Dictionary of configurations, but unreadable form. 
         """
         data = {
             "toggle_key": self.toggle_key,
@@ -114,11 +106,8 @@ class State:
         """
         Converts the configurations to a dictionary.(Readable form)
         
-        Returns
-        -------
-        dict
-            Dictionary of configurations, and readable form.
-        
+        Returns:
+            dict : Dictionary of configurations, and readable form.
         """
         data = {
             "toggle_key": self.toggle_key_str,

@@ -1,24 +1,28 @@
-from logging import info, debug
+from logging import info, debug, error
 from utils import setup_logger
 from core.state import State
 from cli.parse_args import parse_args
 from cli.status_display import show_status
-from config.load_save_reset_configs import load_configs, save_configs, reset_configs, check_configs
+from config.load import load_configs
+from config.save import save_configs
+from config.reset import reset_configs
+from config.validate import check_configs
 from config.constants import CONFIGS_PATH
 from core.start_operation import start_auto_clicker
 
 def command():
     """
-    Main entry point for the Auto Clicker CLI program.
+    This function handles the high-level control flow for all supported CLI subcommands:
+    - `set`    : Configure toggle/exit keys, click interval, and mouse button
+                via manual input or config file. Supports resetting to defaults.
+    - `status` : Display the current configuration in a stylized format.
+    - `start`  : Launch the auto-clicker loop using the saved config state.
 
-    This function handles the high-level control flow for the three CLI subcommands:
-    - `set`: Allows the user to configure toggle/exit keys, click interval, and mouse button,
-             either via manual arguments or JSON config file. Supports resetting to defaults.
-    - `status`: Displays the current config in a stylized console format.
-    - `start`: Loads config, displays current state, and launches the auto-clicker loop.
+    It also initializes the logger immediately after parsing arguments. The `--debug` flag is
+    available for all subcommands and enables verbose logging for development or troubleshooting.
 
-    It also initializes the logger before parsing the command-line arguments.
-    The logging level is dynamically adjusted for the `start` command via the `--debug` flag.
+    Raises:
+        SystemExit: If invalid arguments are provided.
     """
 
     # Initialize a state of program (data pool)
@@ -70,12 +74,13 @@ def command():
         
         # Load saved configs and update app state
         loaded_configs = load_configs(CONFIGS_PATH)
-        info("[green]Loaded configs complete !!!")
+        info("[green]Loaded configs complete !!![/]")
         state.set_data_from_dict(loaded_configs)
-        info("Set configs to the state.")
+        debug("Set configs to the state.")
         
         # Show startup summary to the user
         show_status(state.to_show_dict())
+        info("[bold magenta]Keyboard Listener[/]'s [green]Ready !!![/]")
 
         # Launch main auto clicker logic (threads, listener, etc.)
         start_auto_clicker(state)

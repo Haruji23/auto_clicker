@@ -1,3 +1,12 @@
+"""
+Keyboard listener logic for toggle and exit hotkeys.
+
+Defines the `create_on_press()` callback that responds to user key input.
+
+Args:
+    state (State) : Class containing clicker setting & program status
+"""
+
 from core.state import State
 from logging import info, debug
 from typing import Callable
@@ -11,15 +20,11 @@ def create_on_press(state: State) -> Callable[[Key, KeyCode], None]:
     When the toggle key is pressed, it flips the operating state of the auto-clicker. When the
     stop key is pressed, it marks the application for termination.
 
-    Parameters
-    ----------
-    state : State
-        An instance of the State class containing runtime flags and user-defined hotkeys.
+    Parameters:
+        state (State): An instance of the State class containing runtime flags and user-defined hotkeys.
 
-    Returns
-    -------
-    Callable[[Key | KeyCode], None]
-        A keyboard event handler function to be used with pynput's listener.
+    Returns:
+        Callable[[Key | KeyCode], None]: A handler function used with pynput listener.
     """
 
     def on_press(key: Key | KeyCode) -> None:
@@ -30,22 +35,16 @@ def create_on_press(state: State) -> Callable[[Key, KeyCode], None]:
         state object. If the toggle key is pressed, the auto-clicker switches between active and
         inactive states. If the stop key is pressed, it signals the application to exit gracefully.
 
-        Side Effects
-        ------------
+        Side Effects:
         - Sets or unsets `state.operating`, changing whether the clicker is actively clicking.
         - Sets `state.exiting = True` to trigger application shutdown on the next cycle.
         - Emits logging messages indicating mode transitions.
 
-        Parameters
-        ----------
-        key : Key | KeyCode
-            The key object received from pynput's keyboard listener. Can be a special key (Key)
-            or a character key (KeyCode).
+        Parameters:
+            key (Key | KeyCode): The key object received from pynput's keyboard listener. Can be a special key (Key) or a character key (KeyCode).
 
-        Returns
-        -------
-        None
-            This function performs state transitions and logging, but does not return a value.
+        Returns:
+            None: This function performs state transitions and logging, but does not return a value.
         """
         if key == state.toggle_key:
             state.operating = not state.operating

@@ -1,3 +1,10 @@
+"""
+Custom formatter for colored log output (if not using rich).
+
+Classes:
+    ColorFormatter: A logging formatter that adds ANSI color codes.
+"""
+
 from logging import INFO, Formatter, ERROR, DEBUG, WARNING, CRITICAL
 from config.constants import WHITE, CYAN, YELLOW, RED, DARK_RED
 

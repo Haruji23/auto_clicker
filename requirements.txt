@@ -1,0 +1,5 @@
+# Core libraries
+pynput==1.8.1 # Hotkey & input capture
+rich==14.0.0 # Colorful CLI display
+
+

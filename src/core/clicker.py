@@ -1,3 +1,13 @@
+"""
+Threaded auto-clicker logic.
+
+Defines the AutoClicker class that performs mouse clicks at a given interval
+until toggled off.
+
+Classes:
+    AutoClicker: A daemon thread that performs repeated mouse clicks.
+"""
+
 from time import sleep
 from threading import Thread
 from pynput.keyboard import Listener
@@ -10,21 +20,19 @@ class AutoClicker(Thread):
     A background thread that continuously performs automated mouse clicks
     based on the current state configuration.
 
-    Attributes
-    ----------
-    keyboard_listener : pynput.keyboard.Listener
-        A keyboard listener instance used to stop listening when exiting.
-    mouse_controller : pynput.mouse.Controller
-        A controller instance used to execute mouse click actions.
-    state : State
-        Shared state object containing runtime flags and click settings.
+    This thread activates mouse clicks at regular intervals as long as the
+    auto-clicker is toggled on and the application has not been marked for exit.
 
-    Methods
-    -------
-    run():
-        Executes the main auto-clicking loop, clicking at the specified interval
-        as long as the operating flag is active and the program is not exiting.
+    Attributes:
+        keyboard_listener (pynput.keyboard.Listener): A keyboard listener instance
+            used to stop listening when the program exits.
+        mouse_controller (pynput.mouse.Controller): A controller used to simulate mouse clicks.
+        state (State): An object containing runtime flags and user-defined config.
+
+    Methods:
+        run(): Executes the auto-click loop until the stop condition is triggered.
     """
+
 
     def __init__(
                 self,
@@ -45,10 +53,8 @@ class AutoClicker(Thread):
         Executes the main auto-clicking loop, performing mouse clicks at a defined
         interval while monitoring the state flags.
 
-        Returns
-        -------
-        None
-            This method does not return a value.
+        Returns:
+            None: This method does not return a value.
         """
         while not self.state.exiting: # while program's running
             if self.state.operating: # if auto-clicking's acitived
@@ -65,4 +71,4 @@ class AutoClicker(Thread):
                 sleep(0.1)
         # if exiting is true
         self.keyboard_listener.stop() # Stop running the keyboard listener
-        info("[bold green]Keyboard listener[/] [bold red]stopped.[/]")
+        info("[bold magenta]Keyboard listener[/] [bold red]stopped.[/]")
