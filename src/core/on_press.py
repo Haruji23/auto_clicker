@@ -7,7 +7,7 @@ Args:
     state (State) : Class containing clicker setting & program status
 """
 
-from core.state import State
+from src.core.state import State
 from logging import info, debug
 from typing import Callable
 from pynput.keyboard import Key, KeyCode

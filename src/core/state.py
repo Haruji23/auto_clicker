@@ -13,7 +13,7 @@ Classes:
 from dataclasses import dataclass
 from pynput.keyboard import Key, KeyCode
 from pynput.mouse import Button
-from utils.key_parser import key_mouse_to_str, parse_key, parse_button
+from src.utils.key_parser import key_mouse_to_str, parse_key, parse_button
 @dataclass
 class State:
     """
@@ -31,6 +31,7 @@ class State:
     # Applicaion State
     operating: bool = False
     exiting: bool = False
+    keyboard_listening: bool = False
 
     # Configurations
     def __init__(self,
@@ -116,3 +117,5 @@ class State:
             "interval": self.click_interval
         }
         return data
+
+state = State()

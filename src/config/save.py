@@ -17,8 +17,8 @@ Raises:
 
 import json
 from logging import exception,error, warning, info
-from config.constants import CONFIGS_PATH
-from config.validate import check_configs
+from src.config.constants import CONFIGS_PATH
+from src.config.validate import check_configs
 
 def save_configs(config: dict) -> None:
     """

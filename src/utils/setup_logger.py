@@ -15,7 +15,7 @@ import logging
 from pathlib import Path
 
 
-def setup_logger(debug_mode: bool = False, log_dir: str = "../logs") -> None:
+def setup_logger(debug_mode: bool = False, log_dir: str = "logs") -> None:
     """
     Setup logger with:
     - Rich console output (styled like cyber terminal)
@@ -49,12 +49,13 @@ def setup_logger(debug_mode: bool = False, log_dir: str = "../logs") -> None:
         "%(asctime)s [%(levelname)s] %(message)s", "%Y-%m-%d %H:%M:%S"
     )
 
-    # === DEBUG only → logs/debug.log ===
-    debug_file = logging.FileHandler(f"{log_dir}/debug.log", mode="w", encoding="utf-8")
-    debug_file.setLevel(logging.DEBUG)
-    debug_file.addFilter(lambda r: r.levelno == logging.DEBUG)
-    debug_file.setFormatter(formatter)
-    logger.addHandler(debug_file)
+    if debug_mode:
+        # === DEBUG only → logs/debug.log ===
+        debug_file = logging.FileHandler(f"{log_dir}/debug.log", mode="w", encoding="utf-8")
+        debug_file.setLevel(logging.DEBUG)
+        debug_file.addFilter(lambda r: r.levelno == logging.DEBUG)
+        debug_file.setFormatter(formatter)
+        logger.addHandler(debug_file)
 
     # === INFO only → logs/info.log ===
     info_file = logging.FileHandler(f"{log_dir}/info.log", mode="w", encoding="utf-8")

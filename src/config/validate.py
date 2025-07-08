@@ -8,10 +8,10 @@ Functions:
     check_configs(config: dict) -> dict: Validate the configuration against expected schema.
 """
 
-from config.constants import DEFAULT_CONFIGS
+from src.config.constants import DEFAULT_CONFIGS
 from logging import error, info, warning
-from utils.is_key import is_key
-from utils.is_button import is_mouse_button
+from src.utils.is_key import is_key
+from src.utils.is_button import is_mouse_button
 
 def check_configs(config: dict) -> dict:
     """

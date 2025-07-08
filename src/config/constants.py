@@ -17,4 +17,4 @@ DEFAULT_CONFIGS = {
 }
 
 # File path of the current configurations
-CONFIGS_PATH = Path("../settings/current_configs.json")
+CONFIGS_PATH = Path("settings/current_configs.json")

@@ -1,9 +1,3 @@
-"""
-CLI entrypoint & user-facing display logic.
-"""
+from src.cli.argparse import create_parser
 
-from .command import command
-from .status_display import show_status
-from .parse_args import parse_args
-
-__all__ = ["command", "show_status", "parse_args"]
+__all__ = ["create_parser"]

@@ -1,0 +1,12 @@
+#configs-list {
+    padding: 1;
+    border: round #1E90FF;
+    background: $panel;
+    height: 33%;
+    width: 100%;
+    margin: 1;
+}
+
+ListItem {
+    padding: 0 1;
+}

@@ -1,0 +1,43 @@
+/* Style ปุ่มกลุ่ม menu */
+Button.menu {
+    width: 35%;
+    text-align: center;
+    margin: 1 0;
+    padding: 1;
+    text-style: bold;
+}
+
+/* Container ที่รวมกลุ่มปุ่ม */
+#menu-buttons {
+    align: center middle;
+    width: 100%;
+    content-align: center middle;
+    background: $panel;
+}
+
+Button.menu:focus {
+    margin: 1 0;
+    text-style: bold italic;
+    border: round $primary;
+}
+
+#start:focus {
+    margin: 1 0;
+    text-style: bold italic;
+    border: round #222831;
+}
+
+#exit:focus {
+    margin: 1 0;
+    text-style: bold italic;
+    border: round #222831;
+}
+
+#menu-hint {
+    width: 35%;
+    padding: 1;
+    color: $accent;
+    text-style: bold italic;
+    text-align: center;
+}
+

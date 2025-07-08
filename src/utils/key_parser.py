@@ -9,7 +9,7 @@ Functions:
 from pynput.mouse import Button
 from pynput.keyboard import Key, KeyCode
 from logging import critical, error
-from utils.is_button import is_mouse_button
+from src.utils.is_button import is_mouse_button
 
 
 def key_mouse_to_str(key: Key | KeyCode | Button) -> str:

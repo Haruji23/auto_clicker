@@ -1,9 +1,9 @@
-from core.state import State
+from src.core.state import State
 from logging import info
 from pynput.keyboard import Listener
 from pynput.mouse import Controller
-from core.clicker import AutoClicker
-from core.on_press import create_on_press
+from src.core.clicker import AutoClicker
+from src.core.on_press import create_on_press
 
 """
 Entry point to launch the auto-clicker loop.
@@ -30,15 +30,18 @@ def start_auto_clicker(state: State) -> None:
     # Set up keyboard listener in a non-blocking manner
     keyboard_listener = Listener(on_press=create_on_press(state=state))
 
+    # Start the keyboard listener
+    keyboard_listener.start()
+    # Set the keyboard_listening is True
+    state.keyboard_listening = True
+    
     # Initailize an auto-click thread
     auto_clicker = AutoClicker(
         mouse_controller=mouse_controller,
         keyboard_listener=keyboard_listener,
         state=state
     )
-    # Start the keyboard listener
-    keyboard_listener.start()
-    
+
     # Start the auto clicker thread
     auto_clicker.start()
     

@@ -18,8 +18,8 @@ Raises:
 import json
 from logging import exception, warning, info, debug
 from pathlib import Path
-from config.constants import DEFAULT_CONFIGS, CONFIGS_PATH
-from config.validate import check_configs
+from src.config.constants import DEFAULT_CONFIGS, CONFIGS_PATH
+from src.config.validate import check_configs
 
 def load_configs(path: str | None = None) -> dict:
     """

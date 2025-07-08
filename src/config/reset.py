@@ -15,8 +15,8 @@ Raises:
 """
 
 from logging import info
-from config.constants import DEFAULT_CONFIGS
-from config.save import save_configs
+from src.config.constants import DEFAULT_CONFIGS
+from src.config.save import save_configs
 
 
 def reset_configs()-> None:
