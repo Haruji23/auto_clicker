@@ -26,39 +26,39 @@ def check_configs(config: dict) -> dict:
         dict: A full configuration dict with no missing keys.
     """
     if "toggle_key" not in config:
-        info("[bold green]Toggle key[/] [bold red]Not Exist[/]")
-        info(f"Set to [bold]{DEFAULT_CONFIGS["toggle_key"]}[/](Default Value)")
+        info("Toggle key Not Exist")
+        info(f"Set to {DEFAULT_CONFIGS["toggle_key"]} (Default Value)")
         config["toggle_key"] = DEFAULT_CONFIGS["toggle_key"]
     elif not isinstance(config["toggle_key"], str) or not is_key(config["toggle_key"]):
-        info("[bold green]Toggle key[/]'s [bold red]Invalid !!![/]")
-        info(f"Set to [bold]{DEFAULT_CONFIGS["toggle_key"]}[/](Default Value)")
+        info("Toggle key's Invalid !!!")
+        info(f"Set to {DEFAULT_CONFIGS["toggle_key"]} (Default Value)")
         config["toggle_key"] = DEFAULT_CONFIGS["toggle_key"]
     
     if "exit_key" not in config:
-        info("[bold magenta]Exit key[/] [bold red]Not Exist[/]")
-        info(f"Set to [bold]{DEFAULT_CONFIGS["exit_key"]}[/](Default Value)")
+        info("Exit key Not Exist")
+        info(f"Set to {DEFAULT_CONFIGS["exit_key"]} (Default Value)")
         config["exit_key"] = DEFAULT_CONFIGS["exit_key"]
     elif not isinstance(config["exit_key"], str) or not is_key(config["exit_key"]):
-        info("[bold magenta]Exit key[/]'s [bold red]Invalid !!![/]")
-        info(f"Set to [bold]{DEFAULT_CONFIGS["exit_key"]}[/](Default Value)")
+        info("Exit key's Invalid !!!")
+        info(f"Set to {DEFAULT_CONFIGS["exit_key"]} (Default Value)")
         config["exit_key"] = DEFAULT_CONFIGS["exit_key"]
     
     if "button" not in config:
-        info("[bold cyan]Click Button[/]'s [bold red]Not Exist[/]")
-        info(f"Set to [bold]{DEFAULT_CONFIGS["button"]}[/](Default Value)")
+        info("Click Button's Not Exist")
+        info(f"Set to {DEFAULT_CONFIGS["button"]} (Default Value)")
         config["button"] = DEFAULT_CONFIGS["button"]
     elif not isinstance(config["button"], str) or not is_mouse_button(config["button"]):
-        info("[bold cyan]Click Button[/]'s [bold red]Invalid !!![/]")
-        info(f"Set to [bold]{DEFAULT_CONFIGS["button"]}[/](Default Value)")
+        info("Click Button's Invalid !!!")
+        info(f"Set to {DEFAULT_CONFIGS["button"]} (Default Value)")
         config["button"] = DEFAULT_CONFIGS["button"]
 
     if "interval" not in config:
-        info("[bold cyan]Click Interval Timer[/]'s [bold red]Not Exist[/]")
-        info(f"Set to [bold]{DEFAULT_CONFIGS["interval"]}[/](Default Value)")
+        info("Click Interval Timer's Not Exist")
+        info(f"Set to {DEFAULT_CONFIGS["interval"]} (Default Value)")
         config["interval"] = DEFAULT_CONFIGS["interval"]
     elif not isinstance(config["interval"], float): 
-        info("[bold cyan]Click Interval Timer[/]'s [bold red]Invalid !!![/]")
-        info(f"Set to [bold]{DEFAULT_CONFIGS["interval"]}[/](Default Value)")
+        info("Click Interval Timer's [bold red]Invalid !!!")
+        info(f"Set to {DEFAULT_CONFIGS["interval"]} (Default Value)")
         config["interval"] = DEFAULT_CONFIGS["interval"]
 
     return config

@@ -1,9 +1,8 @@
 from textual.widget import Widget
 from textual.app import ComposeResult
-from src.config.load import load_configs
-from src.config.constants import CONFIGS_PATH
 from textual.widgets import Label, ListView, ListItem
-from src.core.state import state, State
+from src.core.app_state.state import State
+from logging import debug, getLogger
 
 class ConfigsPanel(Widget):
 
@@ -26,6 +25,7 @@ class ConfigsPanel(Widget):
             markup=markup
         )
         self.state = state
+        self.logger = getLogger("AutoClicker")
     
     def compose(self) -> ComposeResult:
         self.list_view = ListView(id="configs-list")
@@ -33,14 +33,16 @@ class ConfigsPanel(Widget):
         yield self.list_view
 
     def on_mount(self) -> None:
-        config = self.state.to_show_dict()
+        self.logger.debug("ConfigsPanel on_mount() is triggered")
+        config = self.state.configs_dict()
         for key, value in config.items():
             if key == "toggle_key":
-                display = f"[italic cyan]{key}[/]: [bold cyan]{value}[/]"
+                display = f"[bold cyan]Start/Stop Key[/]: [bold italic cyan]{value}[/]"
             elif key == "exit_key":
-                display = f"[italic pink]{key}[/]: [bold pink]{value}[/]"
+                display = f"[bold pink]Exit to Menu Key[/]: [bold italic pink]{value}[/]"
             elif key == "interval":
-                display = f"[italic orange]{key}[/]: [bold orange]{value}[/]"
+                display = f"[bold magenta]Time interval[/]: [bold italic magenta]{value}[/]"
             elif key == "button":
-                display = f"[italic yellow]{key}[/]: [bold yellow]{value}[/]"
+                display = f"[bold yellow]Mouse Button[/]: [bold italic yellow]{value}[/]"
             self.list_view.append(ListItem(Label(display, markup=True)))
+        self.logger.debug(f"ConfigsPanel ListView children count: {len(self.list_view)}")

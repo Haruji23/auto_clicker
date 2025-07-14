@@ -1,0 +1,32 @@
+RuntimePanel{
+    width: 50%;
+}
+
+#runtime-list {
+    padding: 1;
+    border: round #1E90FF;
+    background: $panel;
+    margin: 1;
+    height: 33%;
+}
+
+ConfigsPanel {
+    width: 50%;
+}
+
+#configs-list {
+    background: $panel;
+    border: round $accent;
+    padding: 1;
+    margin: 1;
+    height: 33%;
+}
+
+Horizontal {
+    width: 100%
+}
+
+
+ListItem {
+    padding: 0 1;
+}

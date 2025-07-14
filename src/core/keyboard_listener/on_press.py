@@ -7,12 +7,13 @@ Args:
     state (State) : Class containing clicker setting & program status
 """
 
-from src.core.state import State
-from logging import info, debug
+from src.core.app_state.state import State
+from logging import info, debug, getLogger
 from typing import Callable
 from pynput.keyboard import Key, KeyCode
+from src.core.event.event_system import EventSystem
 
-def create_on_press(state: State) -> Callable[[Key, KeyCode], None]:
+def create_on_press(state: State, events: EventSystem) -> Callable[[Key, KeyCode], None]:
     """
     Returns a keyboard event handler that controls the auto-clicker's runtime behavior.
 
@@ -26,6 +27,7 @@ def create_on_press(state: State) -> Callable[[Key, KeyCode], None]:
     Returns:
         Callable[[Key | KeyCode], None]: A handler function used with pynput listener.
     """
+    logger = getLogger("AutoClicker")
 
     def on_press(key: Key | KeyCode) -> None:
         """
@@ -47,14 +49,15 @@ def create_on_press(state: State) -> Callable[[Key, KeyCode], None]:
             None: This function performs state transitions and logging, but does not return a value.
         """
         if key == state.toggle_key:
-            state.operating = not state.operating
-            debug(f"Operating's state : {state.operating}")
+            temp = not state.operating
+            logger.debug(f"Toggle Key: {state.toggle_key_str} detected")
+            events.update_state("operating", temp)
             if state.operating:
-                info("[bold cyan]Auto-clicker[/] [bold green]started.[/]")
+                logger.info("Auto-clicker started.")
             else:
-                info("[bold cyan]Auto-clicker[/] [bold red]stopped.[/]")
+                logger.info("Auto-clicker stopped.")
         if key == state.exit_key:
-            state.exiting = True
-            debug(f"Exiting's state: {state.exiting}")
-            info("Trying to [bold red]exit[/] the program.")
+            logger.debug(f"Exit Key{state.exit_key_str} detected")
+            events.update_state("operating", False)
+            events.update_state("exiting", True)
     return on_press

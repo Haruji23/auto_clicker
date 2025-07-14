@@ -1,5 +1,4 @@
-# Core libraries
-pynput==1.8.1 # Hotkey & input capture
-rich==14.0.0 # Colorful CLI display
-
-
+# Libs
+pynput==1.8.1 # mouse clicking & keyboard listening
+rich==14.0.0 # make more colorful console
+textual==3.7.1 # TUI

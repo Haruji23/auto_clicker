@@ -10,7 +10,8 @@ Classes:
     State: Stores the current config and runtime state flags.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Callable
 from pynput.keyboard import Key, KeyCode
 from pynput.mouse import Button
 from src.utils.key_parser import key_mouse_to_str, parse_key, parse_button
@@ -29,21 +30,64 @@ class State:
     """
 
     # Applicaion State
-    operating: bool = False
-    exiting: bool = False
-    keyboard_listening: bool = False
-
+    _operating: bool = False
+    _exiting: bool = False
+    _keyboard_listening: bool = False
+    # observers: dict[str, list[Callable]] = field(default_factory=lambda: {
+    #     "operating": [],
+    #     "keyboard_listening": [],
+    #     "exiting": []
+    # })
+    
     # Configurations
-    def __init__(self,
-                toggle_key: Key | KeyCode = Key.f6, # Hotkey to start/stop the auto-clicker (default = F6)
-                exit_key: Key | KeyCode = Key.f8, # Hotkey to exit the program (default = F8)
-                click_button: Button = Button.right, # Mouse button to click (default = right)
-                click_interval: float = 60.0 # Time in seconds between click (default = 60.0)
-                )-> None:
-        self.toggle_key = toggle_key
-        self.exit_key = exit_key
-        self.click_button = click_button
-        self.click_interval = click_interval
+    toggle_key: Key | KeyCode = Key.f6 # Hotkey to start/stop the auto-clicker (default = F6)
+    exit_key: Key | KeyCode = Key.f8 # Hotkey to exit the program (default = F8)
+    click_button: Button = Button.right # Mouse button to click (default = right)
+    click_interval: float = 60.0 # Time in seconds between click (default = 60.0)
+    
+    # def register(self, key: str, callback: Callable):
+    #     if key in self.observers:
+    #         self.observers[key].append(callback)
+
+    # def unregister(self, key: str, callback: Callable):
+    #     if key in self.observers and callback in self.observers[key]:
+    #         self.observers[key].remove(callback)
+    
+    @property
+    def operating(self):
+        return self._operating
+
+    @operating.setter
+    def operating(self, value: bool):
+        self._operating = value
+        # if value != self._operating:
+        #     self._operating = value
+        #     for cb in self.observers["operating"]:
+        #         cb(value)
+    
+    @property
+    def keyboard_listening(self):
+        return self._keyboard_listening
+
+    @keyboard_listening.setter
+    def keyboard_listening(self, value: bool):
+        self._keyboard_listening = value
+        # if value != self._keyboard_listening:
+        #     self._keyboard_listening = value
+        #     for cb in self.observers["keyboard_listening"]:
+        #         cb(value)
+    
+    @property
+    def exiting(self):
+        return self._exiting
+
+    @exiting.setter
+    def exiting(self, value: bool):
+        self._exiting = value
+        # if value != self._exiting:
+        #     self._exiting = value
+        #     for cb in self.observers["exiting"]:
+        #         cb(value)
 
     @property
     def toggle_key_str(self) -> str:
@@ -88,7 +132,7 @@ class State:
         self.click_button = parse_button(data["button"])
         self.click_interval = data["interval"]
     
-    def to_dict(self)-> dict:
+    def raw_configs_dict(self)-> dict:
         """
         Converts the configurations to a dictionary.(Ureadable form)
         
@@ -103,7 +147,7 @@ class State:
         } 
         return data
     
-    def to_show_dict(self) -> dict:
+    def configs_dict(self) -> dict:
         """
         Converts the configurations to a dictionary.(Readable form)
         
@@ -115,6 +159,15 @@ class State:
             "exit_key": self.exit_key_str,
             "button": self.click_button_str,
             "interval": self.click_interval
+        }
+        return data
+    
+    def app_state_dict(self) -> dict:
+        data = {
+            "operating": self.operating,
+            "exiting": self.exiting,
+            "keyboard_listening": self.keyboard_listening,
+            # "observers": self.observers
         }
         return data
 

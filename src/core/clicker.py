@@ -10,9 +10,9 @@ Classes:
 
 from time import sleep
 from threading import Thread
-from pynput.keyboard import Listener
+from src.core.keyboard_listener.key_listen_manager import ListenerManager
 from pynput.mouse import Controller
-from src.core.state import State
+from src.core.app_state.state import State
 from logging import info, debug
 
 class AutoClicker(Thread):
@@ -35,15 +35,16 @@ class AutoClicker(Thread):
 
 
     def __init__(
-                self,
-                keyboard_listener: Listener,
-                mouse_controller: Controller,
-                state: State
-                ):
+        self,
+        keyboard_listener: ListenerManager,
+        mouse_controller: Controller,
+        state: State
+    ):
         super().__init__(
             daemon=True, # Allow the program to exit even if this thread is running
-            target=self.run 
-            )
+            target=self.run,
+            name="ClickerThread" # Name the thread as ClickerThread
+        )
         self.mouse = mouse_controller
         self.keyboard_listener = keyboard_listener
         self.state = state
@@ -56,6 +57,7 @@ class AutoClicker(Thread):
         Returns:
             None: This method does not return a value.
         """
+        debug(f"{self.name} has been activated")
         while not self.state.exiting: # while program's running
             if self.state.operating: # if auto-clicking's acitived
                 self.mouse.click(self.state.click_button)
@@ -70,7 +72,7 @@ class AutoClicker(Thread):
             else:
                 sleep(0.1)
         # if exiting is true
-        self.keyboard_listener.stop() # Stop running the keyboard listener
-        self.state.keyboard_listening = False
-        debug(f"[bold cyan]Keyboard listening[/]: [bold]{self.state.keyboard_listening}[/]")
-        info("[bold magenta]Keyboard listener[/] [bold red]stopped.[/]")
+        debug(f"Exiting's state: {self.state.exiting}")
+        self.keyboard_listener.stop_async() # Stop running the keyboard listener
+        info("Keyboard listener stopped.")
+        debug(f"Keyboard listening: {self.state.keyboard_listening}")
